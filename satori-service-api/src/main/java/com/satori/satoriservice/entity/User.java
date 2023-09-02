@@ -1,21 +1,19 @@
 package com.satori.satoriservice.entity;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.stereotype.Component;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author yanfuyou
- * @since 2023-08-26 12:51:13
+ * @since 2023-09-02 12:06:30
  */
 @ApiModel(value = "User对象", description = "")
 public class User implements Serializable {
@@ -29,6 +27,9 @@ public class User implements Serializable {
     @ApiModelProperty("用户名")
     private String userName;
 
+    @ApiModelProperty("昵称")
+    private String nikeName;
+
     @ApiModelProperty("密码")
     private String userPassword;
 
@@ -37,6 +38,9 @@ public class User implements Serializable {
 
     @ApiModelProperty("头像")
     private String userAvatar;
+
+    @ApiModelProperty("删除标记")
+    private Integer deleted;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
@@ -59,6 +63,14 @@ public class User implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getNikeName() {
+        return nikeName;
+    }
+
+    public void setNikeName(String nikeName) {
+        this.nikeName = nikeName;
     }
 
     public String getUserPassword() {
@@ -85,6 +97,14 @@ public class User implements Serializable {
         this.userAvatar = userAvatar;
     }
 
+    public Integer getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
+
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -104,13 +124,15 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", userName=" + userName +
-                ", userPassword=" + userPassword +
-                ", userSalt=" + userSalt +
-                ", userAvatar=" + userAvatar +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                "}";
+        "id=" + id +
+        ", userName=" + userName +
+        ", nikeName=" + nikeName +
+        ", userPassword=" + userPassword +
+        ", userSalt=" + userSalt +
+        ", userAvatar=" + userAvatar +
+        ", deleted=" + deleted +
+        ", createTime=" + createTime +
+        ", updateTime=" + updateTime +
+        "}";
     }
 }

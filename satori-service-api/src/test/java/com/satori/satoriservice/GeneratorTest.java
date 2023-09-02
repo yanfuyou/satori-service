@@ -4,9 +4,7 @@ package com.satori.satoriservice;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -37,6 +35,7 @@ public class GeneratorTest {
                             .author("yanfuyou")
                             .enableSwagger()
                             .dateType(DateType.TIME_PACK)
+                            .fileOverride()
                             .commentDate("yyyy-MM-dd hh:mm:ss");
                 })
                 .packageConfig(builder -> {
@@ -44,7 +43,7 @@ public class GeneratorTest {
                             .entity("entity")
                             .service("service")
                             .serviceImpl("service.impl")
-                            .pathInfo(Collections.singletonMap(OutputFile.xml,  System.getProperty("user.dir") + "/src/main/resources/mapper"))
+                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml,  System.getProperty("user.dir") + "/src/main/resources/mapper"))
                             .controller("controller");
                 })
                 .strategyConfig(builder -> {
