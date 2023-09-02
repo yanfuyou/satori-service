@@ -2,13 +2,17 @@ package com.satori.satoriservice.controller;
 
 
 import com.alibaba.fastjson2.JSONObject;
+import com.satori.model.ex.BaseException;
 import com.satori.satoriservice.entity.User;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
 
     private final RedisTemplate redisTemplate;
@@ -43,7 +48,6 @@ public class UserController {
     @ApiOperation("redis get测试")
     @GetMapping("/api/test/rds/get")
     public String testRedisGet(){
-
         try {
             String userInfo = (String)redisTemplate.opsForValue().get("user_info-1");
             return userInfo;
@@ -62,6 +66,29 @@ public class UserController {
         }catch (Exception e){
             return null;
         }
+    }
+
+    @PostMapping("/date")
+    public LocalDate testDate(@RequestParam("time") LocalDate time){
+        log.info("收到时间参数：{}",time);
+        return time;
+    }
+
+    @PostMapping("/time")
+    public LocalDateTime testTime(@RequestParam("time") LocalDateTime time){
+        log.info("收到时间参数：{}",time);
+        return time;
+    }
+
+    @PostMapping("/dd")
+    public Date date(@RequestParam("time") Date time){
+        log.info("收到时间参数：{}",time);
+        return time;
+    }
+
+    @GetMapping("/ex")
+    public void testEx(){
+        throw new BaseException("业务异常");
     }
 }
 

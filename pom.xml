@@ -3,13 +3,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.0</version>
-        <relativePath/>
-    </parent>
-
     <groupId>com.satori</groupId>
     <artifactId>satori-service</artifactId>
     <version>release-1.0.0</version>
@@ -21,19 +14,38 @@
     <modules>
         <module>satori-base</module>
         <module>satori-service-api</module>
+        <module>satori-model</module>
     </modules>
 
     <properties>
         <java.version>17</java.version>
+        <spring-boot.version>3.1.0</spring-boot.version>
+
+        <redisson.version>3.22.1</redisson.version>
+
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
     </properties>
 
 
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- redisson -->
+            <dependency>
                 <groupId>org.redisson</groupId>
-                <artifactId>redisson</artifactId>
-                <version>3.22.1</version>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
