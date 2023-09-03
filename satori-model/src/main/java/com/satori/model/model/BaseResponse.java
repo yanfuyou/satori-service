@@ -3,7 +3,6 @@ package com.satori.model.model;
 import com.satori.model.enums.SystemCodeEnum;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 封装返回体
@@ -21,11 +20,6 @@ public class BaseResponse<T> implements Serializable {
 
     private T data;
 
-    private String requestPath;
-
-    private String requestId;
-
-    private LocalDateTime requestTime;
 
 
     public static BaseResponse<Object> success(){
@@ -59,7 +53,12 @@ public class BaseResponse<T> implements Serializable {
         return success;
     }
 
-    public void setSuccess(boolean success) {
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
         this.success = success;
     }
 
@@ -85,29 +84,5 @@ public class BaseResponse<T> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
-    }
-
-    public String getRequestPath() {
-        return requestPath;
-    }
-
-    public void setRequestPath(String requestPath) {
-        this.requestPath = requestPath;
-    }
-
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
-
-    public LocalDateTime getRequestTime() {
-        return requestTime;
-    }
-
-    public void setRequestTime(LocalDateTime requestTime) {
-        this.requestTime = requestTime;
     }
 }

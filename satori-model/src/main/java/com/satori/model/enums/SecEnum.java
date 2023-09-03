@@ -1,5 +1,7 @@
 package com.satori.model.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
+
 /**
  * @auth YanFuYou
  * @date 02/09/23 下午 09:02
@@ -10,6 +12,7 @@ public enum SecEnum {
     UNKNOW(2,"未知"),
     ;
 
+    @EnumValue
     public final Integer value;
 
     public final String desc;
