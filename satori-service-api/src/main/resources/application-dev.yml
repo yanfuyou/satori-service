@@ -1,0 +1,25 @@
+#sql
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+spring:
+  data:
+    redis:
+      host: 52.199.46.233
+      #host: redis-16809.c54.ap-northeast-1-2.ec2.cloud.redislabs.com
+      port: 16809
+      username: default
+      password: zBWLkoPm0UwSD2jVgpbDzkv4rCIWOf04
+      database: 0
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 1
+          max-idle: 2
+          min-idle: 1
+#关闭redis健康检查
+management:
+  endpoint:
+    health:
+      show-details: never

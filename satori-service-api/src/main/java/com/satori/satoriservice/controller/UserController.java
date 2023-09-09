@@ -12,6 +12,8 @@ import com.satori.satoriservice.service.impl.UserServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RedissonClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserServiceImpl userService;
+
+    private final RedissonClient redisson;
 
     @ApiOperation("注册")
     @PostMapping("/api/user/sign_up")
@@ -50,5 +54,21 @@ public class UserController {
         return BaseResponse.success();
     }
 
+
+    @GetMapping("/set")
+    public String set(){
+        try {
+
+            redisson.getBucket("test").set("this is a test val!");
+        }catch (Exception e){
+            return "fail";
+        }
+        return "success";
+    }
+
+    @GetMapping("/get")
+    public String get(){
+        return (String) redisson.getBucket("test").get();
+    }
 }
 
