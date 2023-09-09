@@ -7,9 +7,12 @@ package com.satori.satoriservice.enums;
 public enum ErrorEnum {
 
     U_VALIDATION_ERROR("U10001","验证码错误"),
-    U_VALIDATION_EXPIRED("10002","验证码过期"),
-    U_NAME_OR_PWD_ERROR("10003","用户名错误"),
-    U_EXIST("10004","户名已存在"),
+    U_VALIDATION_BLANK("U10002","验证码不能为空"),
+    U_VALIDATION_EXPIRED("U10003","验证码过期"),
+    U_NAME_OR_PWD_ERROR("U10004","用户名错误"),
+    U_EXIST("U10005","户名已存在"),
+    U_SIGN_UP_FAIL("U10006","注册失败"),
+
 
     ;
 

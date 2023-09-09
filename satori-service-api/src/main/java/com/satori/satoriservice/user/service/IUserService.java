@@ -1,6 +1,6 @@
-package com.satori.satoriservice.service;
+package com.satori.satoriservice.user.service;
 
-import com.satori.satoriservice.entity.User;
+import com.satori.satoriservice.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -12,9 +12,9 @@ import java.io.Serializable;
 public class BaseResponse<T> implements Serializable {
     static final long serialVersionUID = 42L;
 
-    private Boolean success;
+    private Boolean success = true;
 
-    private String code;
+    private String code = "200";
 
     private String errMsg;
 

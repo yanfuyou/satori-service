@@ -8,7 +8,6 @@ import lombok.Data;
  */
 @Data
 public class UserSignRequest {
-
     private String userName;
 
     private String nikeName;

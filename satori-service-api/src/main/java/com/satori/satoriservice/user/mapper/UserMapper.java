@@ -1,6 +1,6 @@
-package com.satori.satoriservice.mapper;
+package com.satori.satoriservice.user.mapper;
 
-import com.satori.satoriservice.entity.User;
+import com.satori.satoriservice.user.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

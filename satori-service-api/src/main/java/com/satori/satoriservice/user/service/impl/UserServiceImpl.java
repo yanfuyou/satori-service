@@ -1,8 +1,8 @@
-package com.satori.satoriservice.service.impl;
+package com.satori.satoriservice.user.service.impl;
 
-import com.satori.satoriservice.entity.User;
-import com.satori.satoriservice.mapper.UserMapper;
-import com.satori.satoriservice.service.IUserService;
+import com.satori.satoriservice.user.entity.User;
+import com.satori.satoriservice.user.mapper.UserMapper;
+import com.satori.satoriservice.user.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
