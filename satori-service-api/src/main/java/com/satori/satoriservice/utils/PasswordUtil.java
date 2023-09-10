@@ -1,6 +1,8 @@
 package com.satori.satoriservice.utils;
 
 import cn.hutool.core.util.StrUtil;
+import com.satori.model.enums.SystemCodeEnum;
+import com.satori.model.ex.BaseException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -21,8 +23,13 @@ public class PasswordUtil {
      * @param salt 盐值
      * @return 加密结果
      */
-    public static Map<String,String> encodePassword(String pwd,String salt) throws NoSuchAlgorithmException {
-        MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+    public static Map<String,String> encodePassword(String pwd,String salt) {
+        MessageDigest sha256;
+        try {
+            sha256 = MessageDigest.getInstance("SHA-256");
+        }catch (Exception e){
+            throw new BaseException(SystemCodeEnum.SYS_INTERNAL_ERR.getCode(),SystemCodeEnum.SYS_INTERNAL_ERR.getDesc());
+        }
         HashMap<String, String> map = new HashMap<>();
         if (StrUtil.isBlank(salt)){
             salt = getSalt();
@@ -47,8 +54,13 @@ public class PasswordUtil {
      * @param salt 密码盐值
      * @return 校验结果
      */
-    public static boolean checkPassword(String sourcePwd,String targetPwd,String salt) throws NoSuchAlgorithmException {
-        Map<String, String> map = encodePassword(sourcePwd, salt);
+    public static boolean checkPassword(String sourcePwd,String targetPwd,String salt) {
+        Map<String, String> map = new HashMap<>();
+        try {
+             map = encodePassword(sourcePwd, salt);
+        }catch (Exception e){
+            throw new BaseException(SystemCodeEnum.SYS_INTERNAL_ERR.getCode(),SystemCodeEnum.SYS_INTERNAL_ERR.getDesc());
+        }
         String ciphertext = map.get("ciphertext");
         return ciphertext.equals(targetPwd);
     }

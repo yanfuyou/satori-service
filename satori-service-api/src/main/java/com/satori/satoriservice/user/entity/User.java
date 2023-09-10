@@ -59,4 +59,7 @@ public class User implements Serializable {
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;
 
+    @ApiModelProperty("用户邮箱")
+    private String userEmail;
+
 }
