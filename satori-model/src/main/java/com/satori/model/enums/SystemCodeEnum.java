@@ -11,9 +11,9 @@ public enum SystemCodeEnum {
     DATA_NOT_EXIST("501","数据不存在"),
     METHOD_ARGS_PARSING_ERR("502","参数解析异常"),
     ;
-    public final String code;
+    private final String code;
 
-    public final String desc;
+    private final String desc;
 
     SystemCodeEnum(String code, String desc) {
         this.code = code;

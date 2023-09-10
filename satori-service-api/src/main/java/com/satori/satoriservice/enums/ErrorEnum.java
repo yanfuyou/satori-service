@@ -16,12 +16,17 @@ public enum ErrorEnum {
     U_NULL_ID("U10008","id不能为空"),
 
 
+    //内容错误
+    C_CATE_NULL_NAME("C10001","名称不能为空"),
+    C_CATE_NOT_EXST("C10002","分类不存在"),
+    C_CATE_NULL_ID("C10003","id不能为空"),
+
     ;
 
 
-    public final String code;
+    private final String code;
 
-    public final String msg;
+    private final String msg;
 
 
     ErrorEnum(String code, String msg) {

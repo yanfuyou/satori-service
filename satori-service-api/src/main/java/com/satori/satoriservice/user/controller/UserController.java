@@ -8,11 +8,11 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.satori.model.enums.SystemCodeEnum;
 import com.satori.model.model.BaseResponse;
-import com.satori.satoriservice.model.request.UserInfoModel;
-import com.satori.satoriservice.user.entity.User;
 import com.satori.satoriservice.enums.ErrorEnum;
+import com.satori.satoriservice.model.request.UserInfoModel;
 import com.satori.satoriservice.model.request.UserSignRequest;
-import com.satori.satoriservice.user.service.impl.UserServiceImpl;
+import com.satori.satoriservice.user.entity.User;
+import com.satori.satoriservice.user.service.IUserService;
 import com.satori.satoriservice.utils.PasswordUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Wrapper;
 import java.util.Map;
 
 /**
@@ -36,7 +35,7 @@ import java.util.Map;
 @Slf4j
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final IUserService userService;
 
     private final RedissonClient redisson;
 
