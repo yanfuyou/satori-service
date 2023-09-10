@@ -7,6 +7,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.satori.model.enums.SystemCodeEnum;
+import com.satori.model.enums.YesOrNoEnum;
 import com.satori.model.model.BaseResponse;
 import com.satori.satoriservice.enums.ErrorEnum;
 import com.satori.satoriservice.model.request.UserInfoModel;
@@ -89,7 +90,7 @@ public class UserController {
             return BaseResponse.fail(ErrorEnum.U_NAME_OR_PWD_ERROR.getCode(),ErrorEnum.U_NAME_OR_PWD_ERROR.getMsg());
         }
         StpUtil.login(one.getId());
-        return BaseResponse.success();
+        return BaseResponse.success(StpUtil.getTokenInfo());
     }
 
 
@@ -121,5 +122,19 @@ public class UserController {
         return BaseResponse.success();
     }
 
+    @ApiOperation("注销用户")
+    @DeleteMapping("/api/user/del/{userId}")
+    public BaseResponse<Object> del(@PathVariable("userId") Long userId){
+        if (ObjectUtil.isNull(userId)){
+            return BaseResponse.fail(ErrorEnum.U_NULL_ID.getCode(),ErrorEnum.U_NULL_ID.getMsg());
+        }
+        boolean b = userService.update(Wrappers.lambdaUpdate(User.class)
+                .set(User::getDeleted, YesOrNoEnum.YES.getValue())
+                .eq(User::getId, userId));
+        if (!b){
+            return BaseResponse.fail(ErrorEnum.U_DEL_FAIL.getCode(),ErrorEnum.U_DEL_FAIL.getMsg());
+        }
+        return BaseResponse.success();
+    }
 }
 
