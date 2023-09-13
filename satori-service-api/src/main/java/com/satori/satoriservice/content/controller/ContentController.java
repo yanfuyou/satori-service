@@ -10,7 +10,6 @@ import com.satori.model.enums.YesOrNoEnum;
 import com.satori.model.model.BaseResponse;
 import com.satori.satoriservice.content.entity.ContentCategory;
 import com.satori.satoriservice.content.service.IContentCategoryService;
-import com.satori.satoriservice.content.service.impl.ContentCategoryServiceImpl;
 import com.satori.satoriservice.enums.ErrorEnum;
 import com.satori.satoriservice.model.content.ContentCategoryModel;
 import io.swagger.annotations.ApiOperation;
@@ -73,5 +72,63 @@ public class ContentController {
 
         return BaseResponse.fail(ErrorEnum.C_CATE_NOT_EXST.getCode(),ErrorEnum.C_CATE_NOT_EXST.getMsg());
     }
+
+    @ApiOperation("保存文章")
+    @PostMapping("/api/content/save")
+    public BaseResponse<Long> contentSave(){
+
+        return null;
+    }
+
+    @ApiOperation("更新文章")
+    @PutMapping("/api/content/update")
+    public BaseResponse<Object> contentUpdate(){
+
+        return BaseResponse.success();
+    }
+
+    @ApiOperation("删除文章")
+    @DeleteMapping("/api/content/del/{id}")
+    public BaseResponse<Object> contentDel(){
+
+        return BaseResponse.success();
+    }
+
+    @ApiOperation("获取文章列表")
+    @PostMapping("/api/content/list")
+    public BaseResponse<Object> contentList(){
+        return BaseResponse.success();
+    }
+
+    @ApiOperation("添加评论")
+    @PostMapping("/api/content/comment/save")
+    public BaseResponse<Object> commentSave(){
+
+        return BaseResponse.success();
+    }
+
+    @ApiOperation("更新评论")
+    @PutMapping("/api/content/comment/update")
+    public BaseResponse<Object> commentUpdate(){
+
+        return BaseResponse.success();
+    }
+
+
+    @ApiOperation("删除评论")
+    @DeleteMapping("/api/content/comment/del/{id}")
+    public BaseResponse<Object> commentDelete(){
+
+        return BaseResponse.success();
+    }
+
+    @ApiOperation("获取评论树")
+    @GetMapping("/api/content/comment/tree/{contentId}")
+    public BaseResponse<Object> commentTree(){
+
+        return BaseResponse.success();
+    }
+
+
 
 }
