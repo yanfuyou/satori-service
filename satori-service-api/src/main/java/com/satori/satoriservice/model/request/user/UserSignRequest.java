@@ -1,4 +1,4 @@
-package com.satori.satoriservice.model.request;
+package com.satori.satoriservice.model.request.user;
 
 import lombok.Data;
 
