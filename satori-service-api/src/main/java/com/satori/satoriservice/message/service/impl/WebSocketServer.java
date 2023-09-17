@@ -1,8 +1,10 @@
-package com.satori.satoriservice.message.service;
+package com.satori.satoriservice.message.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.google.common.collect.Maps;
+import com.satori.satoriservice.config.WebsocketApplicationContextAware;
 import com.satori.satoriservice.enums.SendTypeEnum;
+import com.satori.satoriservice.message.service.UserMessageService;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
@@ -32,6 +34,11 @@ public class WebSocketServer {
 
     private Long userId;
 
+
+    private final UserMessageService userMessageService = (UserMessageService)WebsocketApplicationContextAware
+            .getApplicationContext()
+            .getBean("userMessageService");
+
     @OnOpen
     public void onOpen(@PathParam("userId") Long userId, Session session) {
         onlineCount++;
@@ -53,6 +60,7 @@ public class WebSocketServer {
             //需要这换为用户昵称
             map3.put("onlineUsers", keySet);
             sendMessageTo(JSONObject.toJSONString(map3),userId);
+            userMessageService.updateOnlineUsers(userId.toString());
         } catch (Exception e) {
             log.error("执行上线通知时发生错误",e);
         }
@@ -129,9 +137,5 @@ public class WebSocketServer {
 
     public static synchronized int getonlineCount() {
         return onlineCount >= 0 ? onlineCount : 0;
-    }
-
-    public Map<String, WebSocketServer> getClients(){
-        return clients;
     }
 }
