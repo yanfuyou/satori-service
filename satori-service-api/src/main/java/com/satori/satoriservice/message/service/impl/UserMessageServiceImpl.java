@@ -1,4 +1,4 @@
-package com.satori.satoriservice.service.impl;
+package com.satori.satoriservice.message.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.satori.satoriservice.message.entity.UserMessage;

@@ -1,9 +1,9 @@
-package com.satori.satoriservice.service.impl;
+package com.satori.satoriservice.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.satori.satoriservice.user.entity.UserGroup;
-import com.satori.satoriservice.user.service.UserGroupService;
 import com.satori.satoriservice.user.mapper.UserGroupMapper;
+import com.satori.satoriservice.user.service.UserGroupService;
 import org.springframework.stereotype.Service;
 
 /**

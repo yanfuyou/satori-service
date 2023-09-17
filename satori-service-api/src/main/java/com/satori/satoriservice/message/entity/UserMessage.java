@@ -50,5 +50,10 @@ public class UserMessage implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 消息内容
+     */
+    private String userMessage;
+
     private static final long serialVersionUID = 1L;
 }

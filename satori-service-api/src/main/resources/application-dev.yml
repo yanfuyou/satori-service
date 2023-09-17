@@ -16,7 +16,7 @@ spring:
         pool:
           enabled: true
           max-active: 1
-          max-idle: 2
+          max-idle: 1
           min-idle: 1
 #关闭redis健康检查
 management:
