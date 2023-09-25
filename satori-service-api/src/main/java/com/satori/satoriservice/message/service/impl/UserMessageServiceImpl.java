@@ -20,6 +20,7 @@ import java.util.Set;
 */
 
 @RequiredArgsConstructor
+//@Service(value = "userMessageService")
 @Service
 public class UserMessageServiceImpl extends ServiceImpl<UserMessageMapper, UserMessage>
     implements UserMessageService{

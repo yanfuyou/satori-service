@@ -1,6 +1,8 @@
 package com.satori.satoriservice.user.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 /**
@@ -23,6 +25,16 @@ public class UserGroupRel implements Serializable {
      * 
      */
     private Integer deleted;
+
+    /**
+     *
+     */
+    private LocalDateTime createTime;
+
+    /**
+     *
+     */
+    private LocalDateTime updateTime;
 
     private static final long serialVersionUID = 1L;
 }

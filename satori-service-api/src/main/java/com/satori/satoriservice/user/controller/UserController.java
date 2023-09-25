@@ -5,12 +5,15 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.satori.model.enums.SystemCodeEnum;
 import com.satori.model.enums.YesOrNoEnum;
 import com.satori.model.model.BaseResponse;
 import com.satori.satoriservice.enums.ErrorEnum;
+import com.satori.satoriservice.model.UserModel;
 import com.satori.satoriservice.model.request.user.UserInfoModel;
+import com.satori.satoriservice.model.request.user.UserSearchRequest;
 import com.satori.satoriservice.model.request.user.UserSignRequest;
 import com.satori.satoriservice.user.entity.User;
 import com.satori.satoriservice.user.service.IUserService;
@@ -21,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -135,6 +139,15 @@ public class UserController {
             return BaseResponse.fail(ErrorEnum.U_DEL_FAIL.getCode(),ErrorEnum.U_DEL_FAIL.getMsg());
         }
         return BaseResponse.success();
+    }
+
+    @ApiOperation("搜索用户")
+    @PostMapping("/api/user/search/list")
+    public BaseResponse<List<UserModel>> searchUsers(@RequestBody UserSearchRequest request){
+        BaseResponse<List<UserModel>> response = new BaseResponse<>();
+        List<UserModel> userModels = userService.searchList(request);
+        response.setData(userModels);
+        return response;
     }
 }
 

@@ -15,6 +15,7 @@ public enum ErrorEnum {
     U_SIGN_UP_FAIL("U10007","注册失败"),
     U_NULL_ID("U10008","id不能为空"),
     U_DEL_FAIL("U10009","注销失败"),
+    U_FRIEND_ADD_FAIL("U10010","好友添加失败"),
 
 
     //内容错误

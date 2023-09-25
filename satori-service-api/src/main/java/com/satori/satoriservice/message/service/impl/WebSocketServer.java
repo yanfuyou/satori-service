@@ -37,7 +37,7 @@ public class WebSocketServer {
 
     private final UserMessageService userMessageService = (UserMessageService)WebsocketApplicationContextAware
             .getApplicationContext()
-            .getBean("userMessageService");
+            .getBean("userMessageServiceImpl");
 
     @OnOpen
     public void onOpen(@PathParam("userId") Long userId, Session session) {
