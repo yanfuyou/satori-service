@@ -1,7 +1,7 @@
 package com.satori.satoriservice.content.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.satori.satoriservice.content.Comment;
+import com.satori.satoriservice.content.entity.Comment;
 import com.satori.satoriservice.content.service.CommentService;
 import com.satori.satoriservice.content.mapper.CommentMapper;
 import org.springframework.stereotype.Service;

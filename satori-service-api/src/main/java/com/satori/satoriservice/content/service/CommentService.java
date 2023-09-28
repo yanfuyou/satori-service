@@ -1,6 +1,6 @@
 package com.satori.satoriservice.content.service;
 
-import com.satori.satoriservice.content.Comment;
+import com.satori.satoriservice.content.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

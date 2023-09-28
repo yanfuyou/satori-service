@@ -1,4 +1,4 @@
-package com.satori.satoriservice.content;
+package com.satori.satoriservice.content.entity;
 
 import java.io.Serializable;
 import java.util.Date;
