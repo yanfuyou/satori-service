@@ -4,6 +4,7 @@ import com.satori.model.model.BaseResponse;
 import com.satori.satoriservice.utils.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RedissonClient;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +37,7 @@ public class SystemController {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ImageIO.write(image,"png",out);
         String imgBase64 = Base64.getEncoder().encodeToString(out.toByteArray());
-        redisson.getBucket(code).set(null,30, TimeUnit.SECONDS);
+        redisson.getBucket(code).set("1",30, TimeUnit.SECONDS);
 
         BaseResponse<String> response = new BaseResponse<>();
         response.setData(imgBase64);

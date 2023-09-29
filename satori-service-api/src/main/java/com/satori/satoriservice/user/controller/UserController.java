@@ -22,10 +22,14 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * <p>
@@ -43,6 +47,8 @@ public class UserController {
     private final IUserService userService;
 
     private final RedissonClient redisson;
+
+    private final ApplicationContext applicationContext;
 
     @ApiOperation("注册")
     @PostMapping("/api/user/sign_up")
@@ -76,13 +82,17 @@ public class UserController {
     @ApiOperation("登录")
     @PostMapping("/api/user/sign_in")
     public BaseResponse<Object> signIn(@RequestBody UserSignRequest request){
-        if (StrUtil.isBlank(request.getValidationCode())){
-            return BaseResponse.fail(ErrorEnum.U_VALIDATION_BLANK.getCode(),ErrorEnum.U_VALIDATION_BLANK.getMsg());
-        }
-        //redis不直接提供过期判断，可以使用jedis判断
-        String flag = (String) redisson.getBucket(request.getValidationCode()).get();
-        if (StrUtil.isBlank(flag)){
-            return BaseResponse.fail(ErrorEnum.U_VALIDATION_EXPIRED.getCode(),ErrorEnum.U_VALIDATION_EXPIRED.getMsg());
+        String[] profiles = applicationContext.getEnvironment().getActiveProfiles();
+        String currentProfile = profiles.length == 0 ? "dev" : profiles[0];
+        if (!"dev".equals(currentProfile)) {
+            if (StrUtil.isBlank(request.getValidationCode())) {
+                return BaseResponse.fail(ErrorEnum.U_VALIDATION_BLANK.getCode(), ErrorEnum.U_VALIDATION_BLANK.getMsg());
+            }
+            //redis不直接提供过期判断，可以使用jedis判断
+            String flag = (String) redisson.getBucket(request.getValidationCode()).get();
+            if (StrUtil.isBlank(flag)) {
+                return BaseResponse.fail(ErrorEnum.U_VALIDATION_EXPIRED.getCode(), ErrorEnum.U_VALIDATION_EXPIRED.getMsg());
+            }
         }
         User one = userService.getOne(Wrappers.lambdaQuery(User.class)
                 .eq(User::getUserName, request.getUserName()));

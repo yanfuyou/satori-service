@@ -6,8 +6,8 @@ mybatis-plus:
 spring:
   data:
     redis:
-      host: 52.199.46.233
-      #host: redis-16809.c54.ap-northeast-1-2.ec2.cloud.redislabs.com
+#      host: 52.199.46.233
+      host: redis-16809.c54.ap-northeast-1-2.ec2.cloud.redislabs.com
       port: 16809
       username: default
       password: zBWLkoPm0UwSD2jVgpbDzkv4rCIWOf04
@@ -23,3 +23,6 @@ management:
   endpoint:
     health:
       show-details: never
+
+sa-token:
+  is-log: true

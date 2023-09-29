@@ -12,7 +12,7 @@ import org.springframework.test.context.TestPropertySource;
 import java.util.Collections;
 
 @SpringBootTest
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:application.yml")
 //@RequiredArgsConstructor
 public class GeneratorTest {
 

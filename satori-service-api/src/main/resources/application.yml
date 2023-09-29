@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /${spring.application.name}
+
+spring:
+  application:
+    name: satori-service-api
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://118.24.128.200:3306/satori?useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC
+    username: root
+    password: lym123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+sa-token:
+  token-name: satori-token
+  is-concurrent: true
+  is-share: true
+  token-style: uuid
