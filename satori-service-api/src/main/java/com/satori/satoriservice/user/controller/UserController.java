@@ -5,7 +5,6 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.satori.model.enums.SystemCodeEnum;
 import com.satori.model.enums.YesOrNoEnum;
@@ -23,13 +22,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * <p>
@@ -157,6 +153,28 @@ public class UserController {
         BaseResponse<List<UserModel>> response = new BaseResponse<>();
         List<UserModel> userModels = userService.searchList(request);
         response.setData(userModels);
+        return response;
+    }
+
+
+    @ApiOperation("获取用户信息")
+    @GetMapping("/api/user/get/{id}")
+    public BaseResponse<UserModel> getUserInfoById(@PathVariable("id") Long id){
+        BaseResponse<UserModel> response = new BaseResponse<>();
+        if (ObjectUtil.isNull(id)){
+            response.setCode(ErrorEnum.U_NULL_ID.getCode());
+            response.setErrMsg(ErrorEnum.U_NULL_ID.getMsg());
+            return response;
+        }
+        User user = userService.getById(id);
+        if (ObjectUtil.isNull(user)){
+            response.setCode(SystemCodeEnum.DATA_NOT_EXIST.getCode());
+            response.setErrMsg(SystemCodeEnum.DATA_NOT_EXIST.getDesc());
+            return response;
+        }
+        UserModel model = new UserModel();
+        BeanUtil.copyProperties(user,model);
+        response.setData(model);
         return response;
     }
 }

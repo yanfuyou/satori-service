@@ -1,7 +1,11 @@
 package com.satori.satoriservice.user.mapper;
 
+import com.satori.satoriservice.model.UserGroupModel;
 import com.satori.satoriservice.user.entity.UserGroupRel;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author yanfuyou
@@ -10,7 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.satori.satoriservice.user.entity.UserGroupRel
 */
 public interface UserGroupRelMapper extends BaseMapper<UserGroupRel> {
-
+    List<UserGroupModel> getUserGroupList(@Param("userId") Long userId);
 }
 
 

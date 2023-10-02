@@ -22,6 +22,11 @@ public class UserGroupRel implements Serializable {
     private Long groupId;
 
     /**
+     * 当前状态
+     */
+    private Byte status;
+
+    /**
      * 
      */
     private Integer deleted;

@@ -14,7 +14,7 @@ public class BaseResponse<T> implements Serializable {
 
     private Boolean success = true;
 
-    private String code = "200";
+    private String code = "0";
 
     private String errMsg;
 
@@ -58,7 +58,7 @@ public class BaseResponse<T> implements Serializable {
         return success;
     }
 
-    public void setSuccess(Boolean success) {
+    private void setSuccess(Boolean success) {
         this.success = success;
     }
 
@@ -67,6 +67,11 @@ public class BaseResponse<T> implements Serializable {
     }
 
     public void setCode(String code) {
+        if ("0".equals(code)){
+            this.success = true;
+        }else {
+            this.success = false;
+        }
         this.code = code;
     }
 

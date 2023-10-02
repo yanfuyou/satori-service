@@ -13,4 +13,17 @@
     <sql id="Base_Column_List">
         user_id,group_id,deleted
     </sql>
+    <select id="getUserGroupList" resultType="com.satori.satoriservice.model.UserGroupModel">
+        select ug.id                                   as id,
+               ug.create_user_id                       as createUserId,
+               ug.group_name                           as groupName,
+               ug.type                                 as type,
+               ug.description                          as description,
+               ug.create_time                          as createTime,
+               IFNULL(rel.create_time, ug.create_time) as joinTime
+        from user_group ug
+                 left join user_group_rel rel on ug.id = rel.group_id
+        where rel.user_id = #{userId}
+           or ug.create_user_id = #{userId}
+    </select>
 </mapper>

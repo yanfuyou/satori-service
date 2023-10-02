@@ -9,6 +9,8 @@ import org.redisson.spring.data.connection.RedissonConnectionFactory;
 import org.redisson.spring.starter.RedissonProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -182,5 +184,14 @@ public class RedissonEnableAutoConfiguration {
             }
         }
         return nodes.toArray(new String[nodes.size()]);
+    }
+
+    /**
+     * 关闭redis健康检查
+     * @return
+     */
+    @Bean
+    public HealthIndicator redisHealthIndicator(){
+        return ()-> Health.up().build();
     }
 }

@@ -6,10 +6,11 @@ package com.satori.model.enums;
  */
 public enum SystemCodeEnum {
 
-    SUCCESS("200","成功"),
+    SUCCESS("0","成功"),
     SYS_INTERNAL_ERR("500","系统内部错误"),
     DATA_NOT_EXIST("501","数据不存在"),
     METHOD_ARGS_PARSING_ERR("502","参数解析异常"),
+    GET_LOCK_FAIL("503","请勿重复操作"),
     ;
     private final String code;
 

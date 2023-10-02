@@ -2,6 +2,8 @@ package com.satori.satoriservice.user.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.satori.model.enums.YesOrNoEnum;
 import lombok.Data;
 
 /**
@@ -24,6 +26,21 @@ public class UserGroup implements Serializable {
      * 用户组名
      */
     private String groupName;
+
+    /**
+     * 是否需要审核
+     */
+    private Byte process;
+
+    /**
+     * 类型
+     */
+    private Byte type;
+
+    /**
+     * 简介
+     */
+    private String description;
 
     /**
      * 

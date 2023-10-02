@@ -1,7 +1,9 @@
 package com.satori.satoriservice.user.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.satori.model.enums.SystemCodeEnum;
+import com.satori.model.enums.YesOrNoEnum;
 import com.satori.model.model.BaseResponse;
 import com.satori.satoriservice.model.request.user.UserFriendAddRequest;
 import com.satori.satoriservice.user.entity.UserFriendRel;
@@ -10,9 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @auth YanFuYou
@@ -39,4 +39,13 @@ public class UserFriendController {
         return BaseResponse.success();
     }
 
+    @ApiOperation("删除好友")
+    @GetMapping("/api/user/friend/del")
+    public BaseResponse<Object> deletedFriend(@RequestParam Long userId,@RequestParam Long userFriendId){
+        userFriendRelService.update(Wrappers.lambdaUpdate(UserFriendRel.class)
+                .eq(UserFriendRel::getUserId,userId)
+                .eq(UserFriendRel::getUserFriendId,userFriendId)
+                .set(UserFriendRel::getDeleted, YesOrNoEnum.YES.getValue()));
+        return BaseResponse.success();
+    }
 }

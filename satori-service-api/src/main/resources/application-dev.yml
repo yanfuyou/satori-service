@@ -18,11 +18,6 @@ spring:
           max-active: 1
           max-idle: 1
           min-idle: 1
-#关闭redis健康检查
-management:
-  endpoint:
-    health:
-      show-details: never
 
 sa-token:
   is-log: true

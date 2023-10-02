@@ -13,6 +13,8 @@ public class UserModel {
 
     private Long id;
 
+    private String userName;
+
     private String nikeName;
 
     private String userEmail;
