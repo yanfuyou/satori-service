@@ -1,7 +1,9 @@
 package com.satori.satoriservice.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.satori.satoriservice.model.UserGroupModel;
+import com.satori.satoriservice.model.UserModel;
 import com.satori.satoriservice.user.entity.UserGroupRel;
 import com.satori.satoriservice.user.mapper.UserGroupMapper;
 import com.satori.satoriservice.user.mapper.UserGroupRelMapper;
@@ -9,7 +11,6 @@ import com.satori.satoriservice.user.service.UserGroupRelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,12 @@ public class UserGroupRelServiceImpl extends ServiceImpl<UserGroupRelMapper, Use
     @Override
     public List<UserGroupModel> getUserGroupList(Long userId) {
         List<UserGroupModel> userGroupList = userGroupRelMapper.getUserGroupList(userId);
-        return Optional.ofNullable(userGroupList).orElse(new ArrayList<>());
+        return Optional.ofNullable(userGroupList).orElse(Lists.newArrayList());
+    }
+
+    @Override
+    public List<UserModel> getGroupUsers(Long groupId) {
+        return Optional.ofNullable(userGroupRelMapper.getGroupUsers(groupId)).orElse(Lists.newArrayList());
     }
 }
 

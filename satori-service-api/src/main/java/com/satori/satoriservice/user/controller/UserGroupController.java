@@ -7,6 +7,7 @@ import com.satori.model.enums.YesOrNoEnum;
 import com.satori.model.model.BaseResponse;
 import com.satori.satoriservice.enums.LockKeyEnum;
 import com.satori.satoriservice.model.UserGroupModel;
+import com.satori.satoriservice.model.UserModel;
 import com.satori.satoriservice.model.request.user.GroupMemberAddRequest;
 import com.satori.satoriservice.model.request.user.UserGroupRequest;
 import com.satori.satoriservice.user.entity.UserGroup;
@@ -14,8 +15,8 @@ import com.satori.satoriservice.user.entity.UserGroupRel;
 import com.satori.satoriservice.user.service.UserGroupRelService;
 import com.satori.satoriservice.user.service.UserGroupService;
 import io.swagger.annotations.ApiOperation;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.redisson.Redisson;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.validation.annotation.Validated;
@@ -83,6 +84,17 @@ public class UserGroupController {
         BaseResponse<List<UserGroupModel>> response = new BaseResponse<>();
         List<UserGroupModel> models = userGroupRelService.getUserGroupList(userId);
         response.setData(models);
+        return response;
+    }
+
+
+    @ApiOperation("获取群用户")
+    @GetMapping("/api/user/group/users/list")
+    @Validated
+    public BaseResponse<List<UserModel>> getGroupUserList(@RequestParam("groupId") @NotNull(message = "群组id不能为空")Long groupId){
+        BaseResponse<List<UserModel>> response = new BaseResponse<>();
+        List<UserModel> groupUsers = userGroupRelService.getGroupUsers(groupId);
+        response.setData(groupUsers);
         return response;
     }
 }

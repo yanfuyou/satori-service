@@ -1,6 +1,7 @@
 package com.satori.satoriservice.user.service;
 
 import com.satori.satoriservice.model.UserGroupModel;
+import com.satori.satoriservice.model.UserModel;
 import com.satori.satoriservice.user.entity.UserGroupRel;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -20,4 +21,11 @@ public interface UserGroupRelService extends IService<UserGroupRel> {
      * @return 群聊列表
      */
     List<UserGroupModel> getUserGroupList(Long userId);
+
+    /**
+     * 获取群组用户
+     * @param groupId
+     * @return
+     */
+    List<UserModel> getGroupUsers(Long groupId);
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.google.common.collect.Maps;
 import com.satori.satoriservice.config.WebsocketApplicationContextAware;
 import com.satori.satoriservice.enums.SendTypeEnum;
+import com.satori.satoriservice.message.entity.UserMessage;
 import com.satori.satoriservice.message.service.UserMessageService;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 /**
@@ -102,6 +104,7 @@ public class WebSocketServer {
             Long userId = jsonObject.getLong("userId");
             Long receiverId = jsonObject.getLong("receiverId");
             Byte sendType = jsonObject.getByte("sendType");
+            Long parentId = Optional.ofNullable(jsonObject.getLong("parentId")).orElse(0L);
             HashMap<String, Object> map4 = Maps.newHashMap();
             map4.put("messageType",4);
             map4.put("content",content);
@@ -113,7 +116,13 @@ public class WebSocketServer {
             }else if (SendTypeEnum.TO_GROUP.getVal().equals(sendType)){
                 sendMessageAll(JSONObject.toJSONString(map4),receiverId);
             }
-
+            UserMessage userMessage = new UserMessage();
+            userMessage.setSenderId(userId);
+            userMessage.setReceiverId(receiverId);
+            userMessage.setReceiverType(sendType);
+            userMessage.setParentMessageId(parentId);
+            userMessage.setMessageContent(content);
+            userMessageService.save(userMessage);
         }catch (Exception e){
             log.error("消息发送失败",e);
         }
@@ -130,6 +139,9 @@ public class WebSocketServer {
 
     public void sendMessageAll(String content, Long userId) throws IOException {
         for (WebSocketServer socket : clients.values()) {
+            if (socket.userId.equals(userId)){
+                continue;
+            }
             socket.session.getAsyncRemote().sendText(content);
         }
 

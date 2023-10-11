@@ -1,7 +1,11 @@
 package com.satori.satoriservice.message.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -13,6 +17,7 @@ public class UserMessage implements Serializable {
     /**
      * 
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -33,7 +38,7 @@ public class UserMessage implements Serializable {
     /**
      * 接收者类型,1-用户,2-群
      */
-    private Integer receiverType;
+    private Byte receiverType;
 
     /**
      * 
@@ -43,17 +48,17 @@ public class UserMessage implements Serializable {
     /**
      * 
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 
      */
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 消息内容
      */
-    private String userMessage;
+    private String messageContent;
 
     private static final long serialVersionUID = 1L;
 }

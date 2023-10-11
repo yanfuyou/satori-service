@@ -3,6 +3,8 @@ package com.satori.satoriservice.user.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.satori.model.enums.YesOrNoEnum;
 import lombok.Data;
 
@@ -15,6 +17,7 @@ public class UserGroup implements Serializable {
     /**
      * 
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

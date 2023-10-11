@@ -26,4 +26,9 @@
         where rel.user_id = #{userId}
            or ug.create_user_id = #{userId}
     </select>
+    <select id="getGroupUsers" resultType="com.satori.satoriservice.model.UserModel">
+        select u.id, u.user_name, u.nike_name, u.user_email, u.user_avatar,rel.create_time
+        from user_group_rel rel
+                 left join user u on u.id = rel.user_id where rel.group_id = #{groupId};
+    </select>
 </mapper>

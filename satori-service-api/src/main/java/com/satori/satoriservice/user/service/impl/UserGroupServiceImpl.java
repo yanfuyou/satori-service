@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup>
     implements UserGroupService{
 
+
 }
 
 
