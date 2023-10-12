@@ -111,11 +111,6 @@ public class WebSocketServer {
             map4.put("senderId",userId);
             map4.put("receiverId",receiverId);
             map4.put("sendType",sendType);
-            if (SendTypeEnum.TO_USER.getVal().equals(sendType)){
-                sendMessageTo(JSONObject.toJSONString(map4),receiverId);
-            }else if (SendTypeEnum.TO_GROUP.getVal().equals(sendType)){
-                sendMessageAll(JSONObject.toJSONString(map4),receiverId);
-            }
             UserMessage userMessage = new UserMessage();
             userMessage.setSenderId(userId);
             userMessage.setReceiverId(receiverId);
@@ -123,6 +118,13 @@ public class WebSocketServer {
             userMessage.setParentMessageId(parentId);
             userMessage.setMessageContent(content);
             userMessageService.save(userMessage);
+            map4.put("id",userMessage.getId());
+            if (SendTypeEnum.TO_USER.getVal().equals(sendType)){
+                sendMessageTo(JSONObject.toJSONString(map4),receiverId);
+            }else if (SendTypeEnum.TO_GROUP.getVal().equals(sendType)){
+                sendMessageAll(JSONObject.toJSONString(map4),receiverId);
+            }
+
         }catch (Exception e){
             log.error("消息发送失败",e);
         }
@@ -139,9 +141,6 @@ public class WebSocketServer {
 
     public void sendMessageAll(String content, Long userId) throws IOException {
         for (WebSocketServer socket : clients.values()) {
-            if (socket.userId.equals(userId)){
-                continue;
-            }
             socket.session.getAsyncRemote().sendText(content);
         }
 
