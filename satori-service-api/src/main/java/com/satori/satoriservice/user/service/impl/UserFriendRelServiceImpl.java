@@ -1,10 +1,13 @@
 package com.satori.satoriservice.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.satori.satoriservice.model.UserModel;
 import com.satori.satoriservice.user.entity.UserFriendRel;
 import com.satori.satoriservice.user.service.UserFriendRelService;
 import com.satori.satoriservice.user.mapper.UserFriendRelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author yanfuyou
@@ -14,7 +17,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserFriendRelServiceImpl extends ServiceImpl<UserFriendRelMapper, UserFriendRel>
     implements UserFriendRelService{
-
+    @Override
+    public List<UserModel> listFriend(Long userId) {
+        return this.baseMapper.listFriend(userId);
+    }
 }
 
 

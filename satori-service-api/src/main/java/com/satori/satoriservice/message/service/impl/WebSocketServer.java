@@ -130,16 +130,20 @@ public class WebSocketServer {
         }
     }
 
-    public void sendMessageTo(String content, Long receiverId) throws IOException {
+    public void sendMessageTo(String content, Long receiverId) {
+        int num = 0;
         for (WebSocketServer socket : clients.values()) {
-            if (socket.userId.equals(receiverId)){
+            if (socket.userId.equals(receiverId) || socket.userId.equals(userId)){
                 socket.session.getAsyncRemote().sendText(content);
-                break;
+                num ++;
+                if (num >= 2){
+                    break;
+                }
             }
         }
     }
 
-    public void sendMessageAll(String content, Long userId) throws IOException {
+    public void sendMessageAll(String content, Long userId) {
         for (WebSocketServer socket : clients.values()) {
             socket.session.getAsyncRemote().sendText(content);
         }

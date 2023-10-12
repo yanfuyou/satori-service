@@ -1,7 +1,11 @@
 package com.satori.satoriservice.user.mapper;
 
+import com.satori.satoriservice.model.UserModel;
 import com.satori.satoriservice.user.entity.UserFriendRel;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author yanfuyou
@@ -10,7 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.satori.satoriservice.user.entity.UserFriendRel
 */
 public interface UserFriendRelMapper extends BaseMapper<UserFriendRel> {
-
+    List<UserModel> listFriend(@Param("userId") Long userId);
 }
 
 

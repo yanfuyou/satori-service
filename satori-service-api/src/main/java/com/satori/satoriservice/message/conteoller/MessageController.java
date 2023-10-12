@@ -37,11 +37,20 @@ public class MessageController {
     public BaseResponse<List<MessageModel>> getMessageHistory(@RequestParam("userId") Long userId,@RequestParam("receiverId") @NotNull(message = "id不能为空") Long receiverId, @RequestParam("receiverType") @NotNull(message = "类型不能为空") Long receiverType) {
         BaseResponse<List<MessageModel>> response = new BaseResponse<>();
         LambdaQueryWrapper<UserMessage> wrapper = new LambdaQueryWrapper<>(UserMessage.class);
-        wrapper.eq(UserMessage::getReceiverId, receiverId)
-                .eq(UserMessage::getReceiverType, receiverType)
-                .le(UserMessage::getCreateTime, LocalDateTime.now());
         if (1 == receiverType){
-            wrapper.eq(UserMessage::getSenderId,userId);
+            wrapper.and(w-> w.eq(UserMessage::getReceiverId, receiverId)
+                    .eq(UserMessage::getReceiverType, receiverType)
+                    .le(UserMessage::getCreateTime, LocalDateTime.now())
+                    .eq(UserMessage::getSenderId,userId));
+            wrapper.or(w ->
+                    w.eq(UserMessage::getReceiverId, userId)
+                    .eq(UserMessage::getReceiverType, receiverType)
+                    .le(UserMessage::getCreateTime, LocalDateTime.now())
+                    .eq(UserMessage::getSenderId,receiverId));
+        }else {
+            wrapper.eq(UserMessage::getReceiverId, receiverId)
+                    .eq(UserMessage::getReceiverType, receiverType)
+                    .le(UserMessage::getCreateTime, LocalDateTime.now());
         }
         wrapper.orderByDesc(UserMessage::getId)
                 .last(" limit 200");

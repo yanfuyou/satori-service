@@ -17,4 +17,25 @@
         user_id,user_friend_id,remark,
         deleted,create_time,update_time
     </sql>
+    <select id="listFriend" resultType="com.satori.satoriservice.model.UserModel">
+        select user.id as id,
+               user.user_name as userName,
+               user.nike_name as nikeName,
+               user.user_email as userEmail,
+               user.user_avatar as userAvatar,
+               rel.create_time as createTime
+        from user_friend_rel rel
+                 left join user on user.id = rel.user_friend_id
+        where rel.user_id = #{userId}
+        union
+        select user.id as id,
+               user.user_name as userName,
+               user.nike_name as nikeName,
+               user.user_email as userEmail,
+               user.user_avatar as userAvatar,
+               rel.create_time as createTime
+        from user_friend_rel rel
+                 left join user on user.id = rel.user_id
+        where rel.user_friend_id = #{userId}
+    </select>
 </mapper>
