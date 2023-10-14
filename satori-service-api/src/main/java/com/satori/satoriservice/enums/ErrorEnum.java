@@ -17,6 +17,7 @@ public enum ErrorEnum {
     U_DEL_FAIL("U10009","注销失败"),
     U_FRIEND_ADD_FAIL("U10010","好友添加失败"),
 
+    G_REPEAT_NAME("G10001","群名称已存在"),
 
     //内容错误
     C_CATE_NULL_NAME("C10001","名称不能为空"),

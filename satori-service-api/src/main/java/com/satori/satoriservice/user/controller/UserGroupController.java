@@ -1,11 +1,13 @@
 package com.satori.satoriservice.user.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.druid.wall.violation.ErrorCode;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.satori.model.enums.SystemCodeEnum;
 import com.satori.model.enums.YesOrNoEnum;
 import com.satori.model.model.BaseResponse;
+import com.satori.satoriservice.enums.ErrorEnum;
 import com.satori.satoriservice.enums.LockKeyEnum;
 import com.satori.satoriservice.model.UserGroupModel;
 import com.satori.satoriservice.model.UserModel;
@@ -46,7 +48,7 @@ public class UserGroupController {
         UserGroup userGroup = new UserGroup();
         BeanUtil.copyProperties(request, userGroup);
         BaseResponse<Object> response = new BaseResponse<>();
-        RLock lock = redissonClient.getLock(LockKeyEnum.CREATE_GROUP.getName());
+        RLock lock = redissonClient.getLock(LockKeyEnum.CREATE_GROUP.getName() + request.getGroupName());
         try {
             if (lock.tryLock()) {
                 userGroupService.save(userGroup);
@@ -54,10 +56,13 @@ public class UserGroupController {
                 response.setCode(SystemCodeEnum.GET_LOCK_FAIL.getCode());
                 response.setErrMsg(SystemCodeEnum.GET_LOCK_FAIL.getDesc());
             }
+        }catch (Exception e){
+            response.setCode(ErrorEnum.G_REPEAT_NAME.getCode());
+            response.setErrMsg(ErrorEnum.G_REPEAT_NAME.getMsg());
         } finally {
             lock.unlock();
         }
-        return BaseResponse.success();
+        return response;
     }
 
     @ApiOperation("加入群组")

@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(Exception.class)
     public BaseResponse<Object> SystemException(Exception e) {
         log.error("",e);
         return BaseResponse.fail(SystemCodeEnum.SYS_INTERNAL_ERR.getCode(),SystemCodeEnum.SYS_INTERNAL_ERR.getDesc());
