@@ -10,17 +10,17 @@ public enum SendTypeEnum {
     ;
 
 
-    private Byte val;
+    private Byte value;
     private String desc;
 
-    SendTypeEnum(Byte val, String desc) {
-        this.val = val;
+    SendTypeEnum(Byte value, String desc) {
+        this.value = value;
         this.desc = desc;
     }
 
 
-    public Byte getVal() {
-        return val;
+    public Byte getValue() {
+        return value;
     }
 
     public String getDesc() {

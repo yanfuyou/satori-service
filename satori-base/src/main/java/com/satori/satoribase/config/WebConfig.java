@@ -13,10 +13,15 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @auth YanFuYou
@@ -36,6 +41,24 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
         registry.addConverter(ConsumerConverters.String2LocalDateConverter.INSTANCE);
         registry.addConverter(ConsumerConverters.String2LoclaDateTimeConverter.INSTANCE);
         registry.addConverter(ConsumerConverters.String2DateConverter.INSTANCE);
+
+    }
+
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        log.info("扩展messageConverts");
+//        Iterator<HttpMessageConverter<?>> iterator = converters.iterator();
+//        while (iterator.hasNext()) {
+//            HttpMessageConverter<?> next = iterator.next();
+//            if (next instanceof MappingJackson2HttpMessageConverter) {
+//                iterator.remove();
+//                break;
+//            }
+//        }
+//        Jackson2ObjectMapperBuilder builder = this.applicationContext.getBean(Jackson2ObjectMapperBuilder.class);
+//        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter(builder.build());
+//
+//        converters.add(mappingJackson2HttpMessageConverter);
     }
 
     @Override
@@ -53,14 +76,14 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext =  applicationContext;
+        this.applicationContext = applicationContext;
     }
 
     @Override
-    public void addCorsMappings(CorsRegistry corsRegistry){
+    public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
                 .allowCredentials(true)
-                .allowedOrigins("http://localhost:8080")
+                .allowedOrigins("**")
                 .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
                 .allowedHeaders("*")
                 .maxAge(3600);

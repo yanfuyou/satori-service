@@ -1,5 +1,6 @@
 package com.satori.satoriservice.model.request.user;
 
+import com.satori.model.enums.YesOrNoEnum;
 import io.swagger.annotations.ApiModelProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +26,7 @@ public class UserGroupRequest {
     private String groupName;
 
     @ApiModelProperty("是否需要审核")
-    private Byte process;
+    private YesOrNoEnum process;
 
     @ApiModelProperty("类型")
     @NotNull(message = "类型不能为空")

@@ -12,7 +12,6 @@ import jakarta.websocket.server.ServerEndpoint;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -119,9 +118,9 @@ public class WebSocketServer {
             userMessage.setMessageContent(content);
             userMessageService.save(userMessage);
             map4.put("id",userMessage.getId());
-            if (SendTypeEnum.TO_USER.getVal().equals(sendType)){
+            if (SendTypeEnum.TO_USER.getValue().equals(sendType)){
                 sendMessageTo(JSONObject.toJSONString(map4),receiverId);
-            }else if (SendTypeEnum.TO_GROUP.getVal().equals(sendType)){
+            }else if (SendTypeEnum.TO_GROUP.getValue().equals(sendType)){
                 sendMessageAll(JSONObject.toJSONString(map4),receiverId);
             }
 
