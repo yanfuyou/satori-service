@@ -1,6 +1,8 @@
 package com.satori.satoriservice.user.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -33,7 +35,7 @@ public class UserGroup implements Serializable {
     /**
      * 是否需要审核
      */
-    private Byte process;
+    private YesOrNoEnum process;
 
     /**
      * 类型
@@ -48,22 +50,22 @@ public class UserGroup implements Serializable {
     /**
      * 
      */
-    private Integer disable;
+    private YesOrNoEnum disable;
 
     /**
      * 
      */
-    private Integer deleted;
+    private YesOrNoEnum deleted;
 
     /**
      * 
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 
      */
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     private static final long serialVersionUID = 1L;
 }

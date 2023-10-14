@@ -1,9 +1,11 @@
 package com.satori.satoriservice.user.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.satori.satoriservice.model.UserModel;
+import com.satori.satoriservice.model.request.user.PageFriendRequest;
 import com.satori.satoriservice.model.request.user.UserSearchRequest;
 import com.satori.satoriservice.user.entity.User;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
@@ -23,5 +25,12 @@ public interface IUserService extends IService<User> {
      * @return 用户信息
      */
     List<UserModel> searchList(UserSearchRequest request);
+
+    /**
+     * 分页查询
+     * @param request 请求参数
+     * @return 用户列表
+     */
+    Page<UserModel> pageList(PageFriendRequest request);
 
 }

@@ -1,6 +1,7 @@
 package com.satori.model.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * @auth YanFuYou
@@ -13,6 +14,7 @@ public enum YesOrNoEnum {
     ;
 
     @EnumValue
+    @JsonValue
     public final Integer value;
 
     public final String desc;
@@ -28,5 +30,15 @@ public enum YesOrNoEnum {
 
     public String getDesc() {
         return desc;
+    }
+
+
+    public static YesOrNoEnum of(Integer value){
+        for (YesOrNoEnum item : values()) {
+            if (value.equals(item.value)){
+                return item;
+            }
+        }
+        return null;
     }
 }

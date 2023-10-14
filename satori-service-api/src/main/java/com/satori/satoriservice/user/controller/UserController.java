@@ -6,11 +6,13 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.satori.model.enums.SystemCodeEnum;
 import com.satori.model.enums.YesOrNoEnum;
 import com.satori.model.model.BaseResponse;
 import com.satori.satoriservice.enums.ErrorEnum;
 import com.satori.satoriservice.model.UserModel;
+import com.satori.satoriservice.model.request.user.PageFriendRequest;
 import com.satori.satoriservice.model.request.user.UserInfoModel;
 import com.satori.satoriservice.model.request.user.UserSearchRequest;
 import com.satori.satoriservice.model.request.user.UserSignRequest;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.ApplicationContext;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -175,6 +178,15 @@ public class UserController {
         UserModel model = new UserModel();
         BeanUtil.copyProperties(user,model);
         response.setData(model);
+        return response;
+    }
+
+    @ApiOperation("分页搜索用户")
+    @PostMapping("/api/user/search/page")
+    public BaseResponse<Page<UserModel>> searchPage(@RequestBody @Validated PageFriendRequest request){
+        BaseResponse<Page<UserModel>> response = new BaseResponse<>();
+        Page<UserModel> modelPage = userService.pageList(request);
+        response.setData(modelPage);
         return response;
     }
 }
