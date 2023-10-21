@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.satori.satoriservice.user.mapper.UserGroupRelMapper">
+<mapper namespace="com.satori.service.user.mapper.UserGroupRelMapper">
 
-    <resultMap id="BaseResultMap" type="com.satori.satoriservice.user.entity.UserGroupRel">
+    <resultMap id="BaseResultMap" type="com.satori.service.user.entity.UserGroupRel">
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="groupId" column="group_id" jdbcType="BIGINT"/>
             <result property="deleted" column="deleted" jdbcType="TINYINT"/>
@@ -13,7 +13,7 @@
     <sql id="Base_Column_List">
         user_id,group_id,deleted
     </sql>
-    <select id="getUserGroupList" resultType="com.satori.satoriservice.model.UserGroupModel">
+    <select id="getUserGroupList" resultType="com.satori.service.model.UserGroupModel">
         select ug.id                                   as id,
                ug.create_user_id                       as createUserId,
                ug.group_name                           as groupName,
@@ -26,7 +26,7 @@
         where rel.user_id = #{userId}
            or ug.create_user_id = #{userId}
     </select>
-    <select id="getGroupUsers" resultType="com.satori.satoriservice.model.UserModel">
+    <select id="getGroupUsers" resultType="com.satori.service.model.UserModel">
         select u.id, u.user_name, u.nike_name, u.user_email, u.user_avatar,rel.create_time
         from user_group_rel rel
                  left join user u on u.id = rel.user_id where rel.group_id = #{groupId};

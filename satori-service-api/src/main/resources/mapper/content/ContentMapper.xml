@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.satori.satoriservice.content.mapper.ContentMapper">
+<mapper namespace="com.satori.service.content.mapper.ContentMapper">
 
-    <resultMap id="BaseResultMap" type="com.satori.satoriservice.content.entity.Content">
+    <resultMap id="BaseResultMap" type="com.satori.service.content.entity.Content">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="title" column="title" jdbcType="VARCHAR"/>
             <result property="categoryId" column="category_id" jdbcType="BIGINT"/>

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.satori.satoriservice.user.mapper.UserFriendRelMapper">
+<mapper namespace="com.satori.service.user.mapper.UserFriendRelMapper">
 
-    <resultMap id="BaseResultMap" type="com.satori.satoriservice.user.entity.UserFriendRel">
+    <resultMap id="BaseResultMap" type="com.satori.service.user.entity.UserFriendRel">
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="userFriendId" column="user_friend_id" jdbcType="BIGINT"/>
             <result property="remark" column="remark" jdbcType="VARCHAR"/>
@@ -17,7 +17,7 @@
         user_id,user_friend_id,remark,
         deleted,create_time,update_time
     </sql>
-    <select id="listFriend" resultType="com.satori.satoriservice.model.UserModel">
+    <select id="listFriend" resultType="com.satori.service.model.UserModel">
         select user.id as id,
                user.user_name as userName,
                user.nike_name as nikeName,
