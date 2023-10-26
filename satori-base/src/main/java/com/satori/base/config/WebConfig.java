@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -78,11 +79,12 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
+        log.info("允许跨域");
         corsRegistry.addMapping("/**")
-                .allowCredentials(true)
-                .allowedOrigins("**")
+                .allowCredentials(false)
+                .allowedOrigins(CorsConfiguration.ALL)
                 .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
-                .allowedHeaders("*")
+                .allowedHeaders(CorsConfiguration.ALL)
                 .maxAge(3600);
     }
 }

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.satori.model.enums.SystemCodeEnum;
 import com.satori.model.model.BaseResponse;
 import com.satori.service.model.request.sys.FileUploadRequest;
+import com.satori.service.model.response.sys.FileModel;
 import com.satori.service.system.entity.CustomSystemConfig;
 import com.satori.service.system.service.CustomSystemConfigService;
 import com.satori.service.system.service.SysFileInfoService;
@@ -20,6 +21,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -80,16 +82,21 @@ public class SystemController {
 
     @ApiOperation("文件上传")
     @PostMapping("/api/system/file/upload")
-    public BaseResponse fileUpload(@RequestParam("file")List<MultipartFile> files){
-
-        FileUploadRequest fileUploadRequest = new FileUploadRequest();
-        fileUploadRequest.setFiles(files);
-        try {
-
-            sysFileInfoService.fileAdd(fileUploadRequest);
-        }catch (Exception e){
-            e.printStackTrace();
+    public BaseResponse fileUpload(@RequestParam("files") List<MultipartFile> files,@RequestParam(name = "descs",required = false)List<String> descs,@RequestParam(name = "privated",required = false)List<Integer> privated, @RequestParam("type")String type){
+        List<FileUploadRequest> request = new ArrayList<>();
+        for (int i = 0; i < files.size(); i++) {
+            FileUploadRequest req = new FileUploadRequest();
+            req.setFile(files.get(i));
+            req.setType(type);
+            if (ObjectUtil.isNotNull(descs) && descs.size()-1 >= i) {
+                req.setDescription(descs.get(i));
+            }
+            if (ObjectUtil.isNotNull(privated) && privated.size()-1 >= i){
+                req.setPrivated(privated.get(i));
+            }
+            request.add(req);
         }
-        return BaseResponse.success();
+        List<FileModel> fileModels = sysFileInfoService.fileAdd(request);
+        return BaseResponse.success(fileModels);
     }
 }

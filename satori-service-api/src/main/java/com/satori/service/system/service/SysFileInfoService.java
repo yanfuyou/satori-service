@@ -14,7 +14,7 @@ import java.util.List;
 * @createDate 2023-10-15 22:24:11
 */
 public interface SysFileInfoService extends IService<SysFileInfo> {
-    List<FileModel> fileAdd(FileUploadRequest dto) throws IOException;
+    List<FileModel> fileAdd(List<FileUploadRequest> dto);
 
     String getDomain();
 }

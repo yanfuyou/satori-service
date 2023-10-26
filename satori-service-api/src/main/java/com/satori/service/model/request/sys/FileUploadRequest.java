@@ -1,11 +1,9 @@
 package com.satori.service.model.request.sys;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author YanFuYou
@@ -13,14 +11,13 @@ import java.util.List;
  */
 @Data
 public class FileUploadRequest implements Serializable {
+    
+    private MultipartFile file;
+    
+    private String description;
 
-    @NotEmpty(message = "选文件呀sir")
-    private List<MultipartFile> files;
+    private String type;
 
-    private List<String> descriptions;
-
-    private List<String> types;
-
-    private List<Integer> privated;
+    private Integer privated;
 
 }
