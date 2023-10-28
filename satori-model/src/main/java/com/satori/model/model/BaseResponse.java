@@ -22,15 +22,15 @@ public class BaseResponse<T> implements Serializable {
 
 
 
-    public static BaseResponse<Object> success(){
-        BaseResponse<Object> response  = new BaseResponse<>();
+    public static <T>BaseResponse<T> success(){
+        BaseResponse<T> response  = new BaseResponse<>();
         response.setCode(SystemCodeEnum.SUCCESS.getCode());
         response.setSuccess(Boolean.TRUE);
         return response;
     }
 
-    public static <T> BaseResponse<Object> success(T data){
-        BaseResponse<Object> response = success();
+    public static <T> BaseResponse<T> success(T data){
+        BaseResponse<T> response = success();
         response.setData(data);
         return response;
     }

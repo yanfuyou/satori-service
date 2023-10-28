@@ -2,6 +2,7 @@ package com.satori.base.config;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaRouter;
+import com.satori.base.context.SpringContextUtils;
 import com.satori.base.convert.ConsumerConverters;
 import com.satori.base.ex.GlobalExceptionHandler;
 import com.satori.base.interceptor.BaseIntercepotr;
@@ -14,11 +15,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -27,7 +31,7 @@ import java.util.List;
  */
 
 @Configuration
-@Import(value = {GlobalExceptionHandler.class})
+@Import(value = {GlobalExceptionHandler.class, SpringContextUtils.class})
 public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
     private static final Logger log = LoggerFactory.getLogger(WebConfig.class);
 
@@ -39,24 +43,22 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
         registry.addConverter(ConsumerConverters.String2LocalDateConverter.INSTANCE);
         registry.addConverter(ConsumerConverters.String2LoclaDateTimeConverter.INSTANCE);
         registry.addConverter(ConsumerConverters.String2DateConverter.INSTANCE);
-
     }
 
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        log.info("扩展messageConverts");
-//        Iterator<HttpMessageConverter<?>> iterator = converters.iterator();
-//        while (iterator.hasNext()) {
-//            HttpMessageConverter<?> next = iterator.next();
-//            if (next instanceof MappingJackson2HttpMessageConverter) {
-//                iterator.remove();
-//                break;
-//            }
-//        }
-//        Jackson2ObjectMapperBuilder builder = this.applicationContext.getBean(Jackson2ObjectMapperBuilder.class);
-//        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter(builder.build());
-//
-//        converters.add(mappingJackson2HttpMessageConverter);
+        log.info("扩展messageConverts");
+        Iterator<HttpMessageConverter<?>> iterator = converters.iterator();
+        while (iterator.hasNext()) {
+            HttpMessageConverter<?> next = iterator.next();
+            if (next instanceof MappingJackson2HttpMessageConverter) {
+                iterator.remove();
+            }
+        }
+        Jackson2ObjectMapperBuilder builder = this.applicationContext.getBean(Jackson2ObjectMapperBuilder.class);
+        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter(builder.build());
+
+        converters.add(mappingJackson2HttpMessageConverter);
     }
 
     @Override

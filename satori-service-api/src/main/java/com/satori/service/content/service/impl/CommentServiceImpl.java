@@ -2,7 +2,7 @@ package com.satori.service.content.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.satori.service.content.entity.Comment;
-import com.satori.service.content.service.CommentService;
+import com.satori.service.content.service.ICommentService;
 import com.satori.service.content.mapper.CommentMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
-    implements CommentService{
+    implements ICommentService {
 
 }
 

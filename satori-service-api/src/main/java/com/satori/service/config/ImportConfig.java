@@ -1,5 +1,6 @@
 package com.satori.service.config;
 
+import com.satori.base.config.JacksonConfig;
 import com.satori.base.config.WebConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,7 @@ import java.util.List;
  * @date 03/09/23 上午 12:37
  */
 @Configuration
-@Import(value = {WebConfig.class})
+@Import(value = {WebConfig.class, JacksonConfig.class})
 public class ImportConfig {
 
 
