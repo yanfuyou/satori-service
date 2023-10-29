@@ -1,10 +1,13 @@
 package com.satori.model.enums;
 
+import com.satori.model.ex.BaseException;
+import com.satori.model.model.BaseResponse;
+
 /**
  * @auth YanFuYou
  * @date 02/09/23 下午 08:30
  */
-public enum SystemCodeEnum {
+public enum SystemCodeEnum implements ICodeService{
 
     SUCCESS("0","成功"),
     SYS_INTERNAL_ERR("500","系统内部错误"),
@@ -29,4 +32,25 @@ public enum SystemCodeEnum {
     public String getDesc() {
         return desc;
     }
+
+
+    @Override
+    public BaseException buildEx() {
+        return new BaseException(this.code,this.desc);
+    }
+
+    @Override
+    public BaseException buildEx(Object... args) {
+        return null;
+    }
+
+    @Override
+    public BaseResponse<Object> buildResp() {
+        BaseResponse<Object> response = new BaseResponse<>();
+        response.setCode(this.code);
+        response.setErrMsg(this.desc);
+        return response;
+    }
+
+
 }

@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.satori.base.common.JacksonUtils;
 import com.satori.model.enums.SystemCodeEnum;
 import com.satori.model.enums.YesOrNoEnum;
@@ -16,11 +17,13 @@ import com.satori.service.content.service.IContentCategoryService;
 import com.satori.service.enums.ErrorEnum;
 import com.satori.service.model.content.ContentCategoryModel;
 import com.satori.service.model.content.ContentModel;
+import com.satori.service.model.request.content.ContentPageRequest;
 import com.satori.service.model.request.content.ContentRequest;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -89,15 +92,18 @@ public class ContentController {
 
     @ApiOperation("保存文章")
     @PostMapping("/api/content/save")
-    public BaseResponse<Object> contentSave(@RequestBody ContentRequest request) {
+    public BaseResponse<Object> contentSave(@RequestBody @Validated ContentRequest request) {
         RLock lock = redissonClient.getLock("content.save" + request.getCreateUserId());
         if (lock.tryLock()) {
-            Content content = BeanUtil.copyProperties(request, Content.class);
-            boolean save = contentService.save(content);
-            lock.unlock();
-            return BaseResponse.success(BeanUtil.copyProperties(content, ContentModel.class));
+            try {
+                Content content = BeanUtil.copyProperties(request, Content.class);
+                contentService.save(content);
+                return BaseResponse.success(BeanUtil.copyProperties(content, ContentModel.class));
+            }finally {
+                lock.unlock();
+            }
         } else {
-            return BaseResponse.fail("C1001", "请误重复点击");
+            return SystemCodeEnum.GET_LOCK_FAIL.buildResp();
         }
     }
 
@@ -118,9 +124,10 @@ public class ContentController {
     }
 
     @ApiOperation("获取文章列表")
-    @PostMapping("/api/content/list")
-    public BaseResponse<Object> contentList() {
-        return BaseResponse.success();
+    @PostMapping("/api/content/list/page")
+    public BaseResponse<Page<ContentModel>> contentList(@RequestBody ContentPageRequest request) {
+        Page<ContentModel> modelPage = contentService.listPage(request);
+        return BaseResponse.success(modelPage);
     }
 
     @ApiOperation("添加评论")
@@ -150,10 +157,5 @@ public class ContentController {
     public BaseResponse<Object> commentTree() {
 
         return BaseResponse.success();
-    }
-
-    @RequestMapping("/api/test")
-    public LocalDateTime test(){
-        return LocalDateTime.now();
     }
 }
