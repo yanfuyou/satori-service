@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BaseException.class)
     public BaseResponse<Object> serviceException(BaseException e) {
         log.error("捕获到异常", e);
-        return BaseResponse.fail("业务异常");
+        return BaseResponse.fail(e.getCode(),e.getMsg());
     }
 
 

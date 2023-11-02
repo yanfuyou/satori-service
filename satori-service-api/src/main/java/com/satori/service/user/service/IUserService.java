@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.satori.service.model.UserModel;
 import com.satori.service.model.request.user.PageFriendRequest;
 import com.satori.service.model.request.user.UserSearchRequest;
+import com.satori.service.model.request.user.UserSignRequest;
 import com.satori.service.user.entity.User;
 
 import java.util.List;
@@ -32,5 +33,15 @@ public interface IUserService extends IService<User> {
      * @return 用户列表
      */
     Page<UserModel> pageList(PageFriendRequest request);
+
+
+    void signUp(UserSignRequest dto);
+
+    /**
+     * 登录
+     * @param dto 用户登录参数
+     * @return token
+     */
+    String signIn(UserSignRequest dto);
 
 }

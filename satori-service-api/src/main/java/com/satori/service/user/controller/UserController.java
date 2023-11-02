@@ -1,6 +1,7 @@
 package com.satori.service.user.controller;
 
 
+import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -51,29 +52,16 @@ public class UserController {
 
     @ApiOperation("注册")
     @PostMapping("/api/user/sign_up")
-    public BaseResponse<Object> signUp(@RequestBody UserSignRequest request){
-        if (StrUtil.isBlank(request.getUserName()) || StrUtil.isBlank(request.getPassword())){
-            return BaseResponse.fail(SystemCodeEnum.METHOD_ARGS_PARSING_ERR.getCode(),SystemCodeEnum.METHOD_ARGS_PARSING_ERR.getDesc());
+    public BaseResponse<Object> signUp(@RequestBody @Validated UserSignRequest request){
+        String[] profiles = applicationContext.getEnvironment().getActiveProfiles();
+        String currentProfile = profiles.length == 0 ? "dev" : profiles[0];
+        if (!"dev".equals(currentProfile)) {
+            String flag = (String) redisson.getBucket(request.getValidationCode()).get();
+            if (StrUtil.isBlank(flag)) {
+                return ErrorEnum.U_VALIDATION_EXPIRED.buildResp();
+            }
         }
-        User one = userService.getOne(Wrappers.lambdaQuery(User.class).eq(User::getUserName, request.getUserName()));
-        if (ObjectUtil.isNotNull(one)){
-            return BaseResponse.fail(ErrorEnum.U_EXIST.getCode(),ErrorEnum.U_EXIST.getMsg());
-        }
-        User user = new User();
-        BeanUtil.copyProperties(request,user);
-        try {
-            Map<String, String> pwdMap = PasswordUtil.encodePassword(request.getPassword(), null);
-            user.setUserPassword(pwdMap.get("ciphertext"));
-            user.setUserSalt(pwdMap.get("salt"));
-        }catch (Exception e){
-            return BaseResponse.fail(SystemCodeEnum.SYS_INTERNAL_ERR.getCode(),SystemCodeEnum.SYS_INTERNAL_ERR.getDesc());
-        }
-        try {
-            userService.save(user);
-        }catch (Exception e){
-            e.printStackTrace();
-            return BaseResponse.fail(ErrorEnum.U_SIGN_UP_FAIL.getCode(),ErrorEnum.U_SIGN_UP_FAIL.getMsg());
-        }
+        userService.signUp(request);
         return BaseResponse.success();
     }
 
@@ -85,24 +73,15 @@ public class UserController {
         String currentProfile = profiles.length == 0 ? "dev" : profiles[0];
         if (!"dev".equals(currentProfile)) {
             if (StrUtil.isBlank(request.getValidationCode())) {
-                return BaseResponse.fail(ErrorEnum.U_VALIDATION_BLANK.getCode(), ErrorEnum.U_VALIDATION_BLANK.getMsg());
+                return ErrorEnum.U_VALIDATION_BLANK.buildResp();
             }
-            //redis不直接提供过期判断，可以使用jedis判断
+            //redisson 不直接提供过期判断，可以使用jedis判断
             String flag = (String) redisson.getBucket(request.getValidationCode()).get();
             if (StrUtil.isBlank(flag)) {
-                return BaseResponse.fail(ErrorEnum.U_VALIDATION_EXPIRED.getCode(), ErrorEnum.U_VALIDATION_EXPIRED.getMsg());
+                return ErrorEnum.U_VALIDATION_EXPIRED.buildResp();
             }
         }
-        User one = userService.getOne(Wrappers.lambdaQuery(User.class)
-                .eq(User::getUserName, request.getUserName()));
-        if (ObjectUtil.isNull(one)){
-            return BaseResponse.fail(ErrorEnum.U_NAME_OR_PWD_ERROR.getCode(),ErrorEnum.U_NAME_OR_PWD_ERROR.getMsg());
-        }
-        boolean pwdCheck = PasswordUtil.checkPassword(request.getPassword(), one.getUserPassword(), one.getUserSalt());
-        if (!pwdCheck){
-            return BaseResponse.fail(ErrorEnum.U_NAME_OR_PWD_ERROR.getCode(),ErrorEnum.U_NAME_OR_PWD_ERROR.getMsg());
-        }
-        StpUtil.login(one.getId());
+        userService.signIn(request);
         return BaseResponse.success(StpUtil.getTokenInfo());
     }
 

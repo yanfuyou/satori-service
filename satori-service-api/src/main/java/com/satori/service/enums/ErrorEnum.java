@@ -1,6 +1,7 @@
 package com.satori.service.enums;
 
 import com.satori.model.ex.BaseException;
+import com.satori.model.model.BaseResponse;
 
 /**
  * @auth YanFuYou
@@ -50,5 +51,12 @@ public enum ErrorEnum {
 
     public BaseException buildEx(){
         return new BaseException(this.code,this.msg);
+    }
+
+    public BaseResponse<Object> buildResp(){
+        BaseResponse<Object> response = new BaseResponse<>();
+        response.setCode(this.code);
+        response.setErrMsg(this.msg);
+        return response;
     }
 }
