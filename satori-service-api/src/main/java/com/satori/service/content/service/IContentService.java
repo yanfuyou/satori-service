@@ -15,4 +15,6 @@ public interface IContentService extends IService<Content> {
 
     Page<ContentModel> listPage(ContentPageRequest dto);
 
+    ContentModel detail(Long id);
+
 }

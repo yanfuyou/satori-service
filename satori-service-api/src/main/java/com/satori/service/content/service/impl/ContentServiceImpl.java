@@ -11,6 +11,7 @@ import com.satori.base.utils.Bean2Utils;
 import com.satori.service.content.entity.Content;
 import com.satori.service.content.service.IContentService;
 import com.satori.service.content.mapper.ContentMapper;
+import com.satori.service.enums.ErrorEnum;
 import com.satori.service.model.content.ContentModel;
 import com.satori.service.model.request.content.ContentPageRequest;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,15 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content>
         Page<ContentModel> modelPage = JSON.parseObject(JSON.toJSONString(page), new TypeReference<Page<ContentModel>>() {
         });
         return modelPage;
+    }
+
+    @Override
+    public ContentModel detail(Long id) {
+        Content content = this.baseMapper.selectById(id);
+        if (null == content){
+            throw ErrorEnum.C_CONTENT_NOT_EXIST.buildEx();
+        }
+        return Bean2Utils.clone(content,ContentModel.class);
     }
 }
 

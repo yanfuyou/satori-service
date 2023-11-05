@@ -26,6 +26,7 @@ public enum ErrorEnum {
     C_CATE_NULL_NAME("C10001","名称不能为空"),
     C_CATE_NOT_EXST("C10002","分类不存在"),
     C_CATE_NULL_ID("C10003","id不能为空"),
+    C_CONTENT_NOT_EXIST("C10004","文章不存在"),
     F_UPLOAD_FAIL("F10001","文件上传失败"),
 
     ;

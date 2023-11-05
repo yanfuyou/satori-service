@@ -20,6 +20,7 @@ import com.satori.service.model.content.ContentModel;
 import com.satori.service.model.request.content.ContentPageRequest;
 import com.satori.service.model.request.content.ContentRequest;
 import io.swagger.annotations.ApiOperation;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -128,6 +129,13 @@ public class ContentController {
     public BaseResponse<Page<ContentModel>> contentList(@RequestBody ContentPageRequest request) {
         Page<ContentModel> modelPage = contentService.listPage(request);
         return BaseResponse.success(modelPage);
+    }
+
+
+    @ApiOperation("获取文章详情")
+    @GetMapping("/api/content/detail/{id}")
+    public BaseResponse<ContentModel> contentDetail(@PathVariable("id") @NotNull(message = "id不能为空") Long id) {
+        return BaseResponse.success(contentService.detail(id));
     }
 
     @ApiOperation("添加评论")
