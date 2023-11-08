@@ -1,5 +1,6 @@
 package com.satori.service.user.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.satori.base.utils.Bean2Utils;
 import com.satori.service.model.UserExtModel;
@@ -31,8 +32,9 @@ public class UserExtServiceImpl extends ServiceImpl<UserExtMapper, UserExt>
 
     @Override
     public UserExtModel userExtGet(Long id) {
-        return Optional.ofNullable(this.baseMapper.selectById(id))
-                .map(ext ->Bean2Utils.clone(ext,UserExtModel.class))
+        return Optional.ofNullable(this.baseMapper.selectOne(Wrappers.lambdaQuery(UserExt.class)
+                        .eq(UserExt::getUserId, id)))
+                .map(ext -> Bean2Utils.clone(ext, UserExtModel.class))
                 .orElseGet(UserExtModel::new);
     }
 }

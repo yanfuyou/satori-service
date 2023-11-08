@@ -1,0 +1,19 @@
+
+spring:
+  data:
+    redis:
+      #      host: 52.199.46.233
+      host: redis-16809.c54.ap-northeast-1-2.ec2.cloud.redislabs.com
+      port: 16809
+      username: default
+      password: zBWLkoPm0UwSD2jVgpbDzkv4rCIWOf04
+      database: 0
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 1
+          max-idle: 1
+          min-idle: 1
+
+sa-token:
+  is-log: false

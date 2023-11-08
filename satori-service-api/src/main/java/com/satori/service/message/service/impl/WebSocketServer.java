@@ -6,10 +6,12 @@ import com.satori.service.config.WebsocketApplicationContextAware;
 import com.satori.service.enums.SendTypeEnum;
 import com.satori.service.message.entity.UserMessage;
 import com.satori.service.message.service.UserMessageService;
+import jakarta.annotation.Resource;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -36,9 +38,9 @@ public class WebSocketServer {
     private Long userId;
 
 
-    private final UserMessageService userMessageService = (UserMessageService)WebsocketApplicationContextAware
-            .getApplicationContext()
-            .getBean("userMessageServiceImpl");
+    @Resource
+    @Lazy
+    private UserMessageService userMessageService;
 
     @OnOpen
     public void onOpen(@PathParam("userId") Long userId, Session session) {

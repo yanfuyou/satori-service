@@ -3,6 +3,8 @@ package com.satori.service.user.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -14,6 +16,7 @@ public class UserGroupRel implements Serializable {
     /**
      * 用户id
      */
+    @TableId(type = IdType.AUTO)
     private Long userId;
 
     /**
