@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.satori.service.pet.mapper.PetDeedsMapper">
+
+    <resultMap id="BaseResultMap" type="com.satori.service.pet.entity.PetDeeds">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="petId" column="pet_id" jdbcType="BIGINT"/>
+            <result property="occTime" column="occ_time" jdbcType="TIMESTAMP"/>
+            <result property="pics" column="pics" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="readCount" column="read_count" jdbcType="INTEGER"/>
+            <result property="state" column="state" jdbcType="TINYINT"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,pet_id,occ_time,
+        pics,description,read_count,
+        state,deleted,create_time,
+        update_time
+    </sql>
+</mapper>
