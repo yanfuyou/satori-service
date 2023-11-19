@@ -74,7 +74,7 @@ public class SysFileInfoServiceImpl extends ServiceImpl<SysFileInfoMapper, SysFi
             return domain;
         }
         CustomSystemConfig sourceDomain = customSystemConfigService.getOne(Wrappers.lambdaQuery(CustomSystemConfig.class)
-                .eq(CustomSystemConfig::getType, "domain"));
+                .eq(CustomSystemConfig::getParamName, "domain"));
         bucket.set(sourceDomain.getParamValue());
         return sourceDomain.getParamValue();
     }

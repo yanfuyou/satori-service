@@ -8,7 +8,7 @@ import com.satori.model.model.BaseResponse;
  * @date 03/09/23 下午 10:25
  */
 public enum ErrorEnum {
-
+    NULL_ID("00000","id不能为空"),
     U_VALIDATION_ERROR("U10001","验证码错误"),
     U_VALIDATION_BLANK("U10002","验证码不能为空"),
     U_VALIDATION_EXPIRED("U10003","验证码错误或过期"),
@@ -29,6 +29,8 @@ public enum ErrorEnum {
     C_CONTENT_NOT_EXIST("C10004","文章不存在"),
     F_UPLOAD_FAIL("F10001","文件上传失败"),
 
+
+    P_MAX_LIMIT("P10001","宠物数量达到最大限制"),
     ;
 
 

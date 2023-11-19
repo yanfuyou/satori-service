@@ -1,42 +1,46 @@
-package com.satori.service.pet.entity;
+package com.satori.service.model.pet;
+
+import com.satori.model.enums.YesOrNoEnum;
+import com.satori.service.enums.PetStateEnum;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.satori.model.enums.YesOrNoEnum;
-import com.satori.service.enums.PetStateEnum;
-import lombok.Data;
-
 /**
- * 宠物
- * @TableName pet_info
+ * @author YanFuYou
+ * @date 15/11/23 下午 10:24
  */
 @Data
-public class PetInfo implements Serializable {
-    /**
-     * 
-     */
-    @TableId(type=IdType.AUTO)
+public class PetModel implements Serializable {
+
     private Long id;
 
+    /**
+     * 主人id
+     */
+    @NotNull(message = "主人id不能为空")
     private Long ownerId;
 
     /**
      * 宠物别名
      */
+    @NotBlank(message = "宠物别名不能为空")
     private String alias;
 
     /**
      * 宠物描述
      */
+    @NotBlank(message = "宠物简介不能为空")
     private String description;
 
     /**
      * 宠物头像
      */
+    @NotBlank(message = "宠物头像不能为空")
     private String avatar;
 
     /**
@@ -63,11 +67,4 @@ public class PetInfo implements Serializable {
      * 创建时间
      */
     private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    private LocalDateTime updateTime;
-
-    private static final long serialVersionUID = 1L;
 }

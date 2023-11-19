@@ -16,6 +16,10 @@ spring:
   jackson:
     serialization:
       FAIL_ON_EMPTY_BEANS: false
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 200MB
 
 sa-token:
   token-name: satori-token
