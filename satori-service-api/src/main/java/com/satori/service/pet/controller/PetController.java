@@ -1,10 +1,16 @@
 package com.satori.service.pet.controller;
 
+import com.alibaba.fastjson2.JSON;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.satori.base.utils.Bean2Utils;
 import com.satori.model.model.BaseResponse;
 import com.satori.service.enums.ErrorEnum;
+import com.satori.service.model.pet.PetDeedsModel;
 import com.satori.service.model.pet.PetModel;
+import com.satori.service.model.request.pet.PetDeedPageRequest;
+import com.satori.service.pet.entity.PetDeeds;
 import com.satori.service.pet.entity.PetInfo;
+import com.satori.service.pet.service.PetDeedsService;
 import com.satori.service.pet.service.PetInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +32,8 @@ import java.util.List;
 public class PetController {
 
     private final PetInfoService petInfoService;
+
+    private final PetDeedsService petDeedsService;
 
     @ApiOperation("添加宠物")
     @PostMapping("/add")
@@ -66,4 +74,19 @@ public class PetController {
         return BaseResponse.success(petModels);
     }
 
+    @ApiOperation("事迹")
+    @PostMapping("/deeds/save")
+    public BaseResponse<Object> save(@RequestBody PetDeedsModel request){
+        PetDeeds petDeeds = Bean2Utils.copyProperties(request, PetDeeds::new);
+        petDeeds.setPics(JSON.toJSONString(request.getPictures()));
+        petDeedsService.saveOrUpdate(petDeeds);
+        return BaseResponse.success(petDeeds.getId());
+    }
+
+
+    @ApiOperation("事迹列表")
+    @PostMapping("/deeds/page")
+    public BaseResponse<Page<PetDeedsModel>> deedsPage(@RequestBody @Validated PetDeedPageRequest request){
+        return BaseResponse.success(petDeedsService.pageList(request));
+    }
 }

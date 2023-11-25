@@ -21,6 +21,11 @@ public class PetDeeds implements Serializable {
     private Long petId;
 
     /**
+     * 事件标题
+     */
+    private String title;
+
+    /**
      * 发生时间
      */
     private LocalDateTime occTime;
