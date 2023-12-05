@@ -29,13 +29,13 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content>
     public Page<ContentModel> listPage(ContentPageRequest dto) {
         Page<Content> page = this.baseMapper.selectPage(new Page<>(dto.getPage(), dto.getSize()), Wrappers.lambdaQuery(Content.class)
                 .select(Content::getId, Content::getCategoryId, Content::getCreateUserId, Content::getTitle, Content::getDeleted, Content::getCreateTime, Content::getUpdateTime)
+                .eq(ObjectUtil.isNotNull(dto.getCategoryId()),Content::getCategoryId,dto.getCategoryId())
                 .eq(ObjectUtil.isNotNull(dto.getCreateUserId()), Content::getCreateUserId, dto.getCreateUserId())
                 .like(StrUtil.isNotBlank(dto.getKeyWord()), Content::getTitle, dto.getKeyWord())
                 .ge(ObjectUtil.isNotNull(dto.getStartTime()), Content::getCreateTime, dto.getStartTime())
                 .lt(ObjectUtil.isNotNull(dto.getEndTime()), Content::getCreateTime, dto.getEndTime()));
-        Page<ContentModel> modelPage = JSON.parseObject(JSON.toJSONString(page), new TypeReference<Page<ContentModel>>() {
+        return JSON.parseObject(JSON.toJSONString(page), new TypeReference<Page<ContentModel>>() {
         });
-        return modelPage;
     }
 
     @Override

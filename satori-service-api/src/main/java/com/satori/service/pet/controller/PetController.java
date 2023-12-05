@@ -45,7 +45,7 @@ public class PetController {
     @ApiOperation("编辑")
     @PostMapping("/edit")
     public BaseResponse<Object> edit(@RequestBody @Validated PetModel request) {
-        if (null == request.getId()){
+        if (null == request.getId()) {
             return ErrorEnum.NULL_ID.buildResp();
         }
         PetInfo petInfo = Bean2Utils.copyProperties(request, PetInfo::new);
@@ -69,14 +69,14 @@ public class PetController {
 
     @ApiOperation("列表")
     @GetMapping("/list/{ownerId}")
-    public BaseResponse<List<PetModel>> petList(@PathVariable Long ownerId){
+    public BaseResponse<List<PetModel>> petList(@PathVariable Long ownerId) {
         List<PetModel> petModels = petInfoService.listByOwnerId(ownerId);
         return BaseResponse.success(petModels);
     }
 
     @ApiOperation("事迹")
     @PostMapping("/deeds/save")
-    public BaseResponse<Object> save(@RequestBody PetDeedsModel request){
+    public BaseResponse<Object> save(@RequestBody PetDeedsModel request) {
         PetDeeds petDeeds = Bean2Utils.copyProperties(request, PetDeeds::new);
         petDeeds.setPics(JSON.toJSONString(request.getPictures()));
         petDeedsService.saveOrUpdate(petDeeds);
@@ -86,7 +86,13 @@ public class PetController {
 
     @ApiOperation("事迹列表")
     @PostMapping("/deeds/page")
-    public BaseResponse<Page<PetDeedsModel>> deedsPage(@RequestBody @Validated PetDeedPageRequest request){
+    public BaseResponse<Page<PetDeedsModel>> deedsPage(@RequestBody @Validated PetDeedPageRequest request) {
         return BaseResponse.success(petDeedsService.pageList(request));
+    }
+
+    @ApiOperation("随机挑选几个")
+    @GetMapping("/random/{num}")
+    public BaseResponse<List<PetModel>> random(@PathVariable Integer num) {
+        return BaseResponse.success(petInfoService.random(num));
     }
 }

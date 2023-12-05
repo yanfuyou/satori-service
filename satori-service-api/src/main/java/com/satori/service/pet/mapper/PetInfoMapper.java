@@ -1,7 +1,11 @@
 package com.satori.service.pet.mapper;
 
+import com.satori.service.model.pet.PetModel;
 import com.satori.service.pet.entity.PetInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author yanfuyou
@@ -10,7 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.satori.service.pet.entity.PetInfo
 */
 public interface PetInfoMapper extends BaseMapper<PetInfo> {
-
+    List<PetModel> randomList(@Param("num") int num);
 }
 
 

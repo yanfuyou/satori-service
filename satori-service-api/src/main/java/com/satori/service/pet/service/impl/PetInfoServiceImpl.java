@@ -3,6 +3,7 @@ package com.satori.service.pet.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.druid.wall.violation.ErrorCode;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.satori.base.utils.Bean2Utils;
@@ -20,7 +21,9 @@ import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yanfuyou
@@ -36,6 +39,7 @@ public class PetInfoServiceImpl extends ServiceImpl<PetInfoMapper, PetInfo>
 
     private final RedissonClient redissonClient;
 
+    private final PetInfoMapper petInfoMapper;
     @Override
     public Long addPet(PetModel dto) {
         RMap<Object, Object> limit = redissonClient.getMap(SystemConfigNameEnum.LIMIT.name);
@@ -77,7 +81,12 @@ public class PetInfoServiceImpl extends ServiceImpl<PetInfoMapper, PetInfo>
                 .eq(PetInfo::getDeleted, YesOrNoEnum.NO)
                 .eq(PetInfo::getOwnerId, ownerId)
                 .orderBy(true, true, PetInfo::getCreateTime));
-        return Bean2Utils.copyProperties(petInfos,PetModel::new);
+        return Bean2Utils.copyProperties(petInfos, PetModel::new);
+    }
+
+    @Override
+    public List<PetModel> random(Integer num) {
+        return petInfoMapper.randomList(num);
     }
 }
 

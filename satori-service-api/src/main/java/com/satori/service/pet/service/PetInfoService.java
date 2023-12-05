@@ -20,4 +20,6 @@ public interface PetInfoService extends IService<PetInfo> {
     void del(Long id);
 
     List<PetModel> listByOwnerId(Long ownerId);
+
+    List<PetModel> random(Integer num);
 }

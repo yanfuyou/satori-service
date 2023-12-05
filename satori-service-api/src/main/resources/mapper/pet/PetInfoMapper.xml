@@ -23,4 +23,10 @@
         state,deleted,create_time,
         update_time
     </sql>
+    <select id="randomList" resultType="com.satori.service.model.pet.PetModel">
+        select * from pet_info
+        where deleted = 0
+        order by rand()
+        limit #{num}
+    </select>
 </mapper>
