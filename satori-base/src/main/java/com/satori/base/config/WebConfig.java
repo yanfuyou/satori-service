@@ -84,7 +84,7 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
         log.info("允许跨域");
         corsRegistry.addMapping("/**")
                 .allowCredentials(false)
-                .allowedOrigins(CorsConfiguration.ALL)
+                .allowedOriginPatterns(CorsConfiguration.ALL)
                 .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
                 .allowedHeaders(CorsConfiguration.ALL)
                 .maxAge(3600);
